@@ -87,6 +87,8 @@ class SCF:
         E_elec_final = self.energy(F_final, P)
         E_tot_final = E_elec_final + self.Enuc
 
+        self.logger.scf_end(eps, C)
+
         if converged:
             self.logger.converged(it, E_tot_final)
         if not converged:
@@ -188,13 +190,3 @@ class SCF:
     
     def energy(self, F: Array, P: Array) -> float:
         return 0.5*np.einsum("mn,mn->", P, (self.H + F), optimize=True)
-        
-if __name__ == "__main__":
-
-    t0 = time.time()
-
-    scf = SCF("H2O.xyz", "STO-2G", 10, None)
-    E = scf.run()
-    print(f"Final energy is {E}")
-
-    print(f"Čas běhu {time.time()-t0} s")

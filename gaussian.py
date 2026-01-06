@@ -367,19 +367,3 @@ def twoel_cgto(A: ContractedGaussian, B: ContractedGaussian, C: ContractedGaussi
                     S += Ap.coeff*Bp.coeff*Cp.coeff*Dp.coeff*twoel_pgto(Ap, Bp, Cp, Dp)
 
     return S*A.norm*B.norm*C.norm*D.norm
-
-if __name__ == "__main__":
-
-    t0 = time.time()
-
-    g1 = PrimitiveGaussian(2, np.array([0, 0, 0]), (1, 2, 1))
-    g2 = PrimitiveGaussian(2, np.array([0, -0.2, 0]), (5, 7, 5))
-    g3 = PrimitiveGaussian(1.5, np.array([0, 0, 0.8]), (1, 0, 1))
-    g4 = PrimitiveGaussian(1.1, np.array([2, -0.1, 0]), (2, 1, 8))
-
-    print(twoel_pgto(g1, g2, g3, g4))
-    print(twoel_pgto(g3, g4, g1, g2))
-
-    #print(overlap_pgto(g1, g2))
-
-    print(f"Čas běhu {time.time()-t0} s")

@@ -150,6 +150,16 @@ class SCFLogger:
         self.log("----+-------------------+-------------+-----------\n")
         self.tscf0 = perf_counter()
 
+    def scf_end(self, eps, C) -> None:
+        self.log("\n")
+        self.log("Computed molecular orbitals and energies:\n\n")
+        self.log("    epsilon    |            coefficients             \n")
+        self.log("---------------+-------------------------------------\n")
+        for epsilon, c in zip(eps, C.T):
+            line = " ".join(f"{number:12.8f}" for number in c)
+            self.log(f"{epsilon:15.8f}|{line}\n")
+        self.log("\n")
+
     def iteration(self, it: int, E_elec: float, E_tot: float, C: Array, eps: Array, dE: float, p_rms: float) -> None:
         rec = SCFIter(it=it, E_elec=E_elec, E_tot=E_tot, dE=dE, p_rms=p_rms, C=C, eps = eps)
         self.history.append(rec)
@@ -158,12 +168,10 @@ class SCFLogger:
         self.log(f"{it:3d} | {E_tot:17.10f} | {dE_str:>11s} | {p_rms:9.2e}\n")
 
     def converged(self, it: int, E_tot: float) -> None:
-        self.log("\n")
         self.log(f"SCF converged in {it} iterations\n")
         self.log(f"Final E_tot = {E_tot:.12f} Eh\n")
 
     def failed(self, maxiter: int, last_E_tot: float) -> None:
-        self.log("\n")
         self.log(f"WARNING: SCF did not converge in {maxiter} iterations\n")
         self.log(f"Last E_tot = {last_E_tot:.12f} Eh\n")
 

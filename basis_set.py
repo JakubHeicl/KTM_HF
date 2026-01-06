@@ -9,7 +9,13 @@ BASIS_SETS_FILENAMES = {"STO-2G": "basis_sets/sto-2g.txt",
                         "STO-4G": "basis_sets/sto-4g.txt",
                         "STO-5G": "basis_sets/sto-5g.txt",
                         "STO-6G": "basis_sets/sto-6g.txt",
-                        "6-31++G": "basis_sets/6-31++g.txt"}
+                        "3-21G": "basis_sets/3-21g.txt",
+                        "6-21G": "basis_sets/6-21g.txt",
+                        "6-31G": "basis_sets/6-31g.txt",
+                        "6-311G": "basis_sets/6-311g.txt",
+                        "6-31++G": "basis_sets/6-31++g.txt",
+                        "6-31++G**": "basis_sets/6-31++gss.txt",
+                        "6-311+G": "basis_sets/6-311+g.txt"}
 
 @dataclass
 class BasisSet:
@@ -41,7 +47,7 @@ def build_basis_set(atoms: list[tuple[int, vec3]], basis_type: str) -> BasisSet:
         for shell in edata.get("electron_shells", []):
             gaussian_type = shell.get("function_type", "gto")
 
-            if gaussian_type.lower() != "gto":
+            if gaussian_type.lower() not in ["gto_cartesian", "gto"]:
                 raise RuntimeError(f"I do not know this type of gaussian: {gaussian_type}")
             
             ls = [int(l) for l in shell["angular_momentum"]]    #list[int]

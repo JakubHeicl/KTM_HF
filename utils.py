@@ -19,6 +19,7 @@ _SYMBOLS = [
     "Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn",
     "Nh","Fl","Mc","Lv","Ts","Og"
 ]
+
 SYMBOL_TO_Z = {s: i for i, s in enumerate(_SYMBOLS) if s != "X"}
 Z_TO_SYMBOL = {v: k for k, v in SYMBOL_TO_Z.items()}
 
@@ -50,8 +51,7 @@ def F_n(n: float, x: float, eps: float = 1e-12) -> float:
         x = 0.0
 
     if x < eps:
-        denom0 = 2*n + 1
-        return (1.0/denom0 - x/(2*n + 3) + x*x/(2.0*(2*n + 5)) - x*x*x/(6.0*(2*n + 7)))
+        return (1.0/(2*n + 1) - x/(2*n + 3) + x*x/(2.0*(2*n + 5)) - x*x*x/(6.0*(2*n + 7)))
 
     return gamma(n+0.5)*gammainc(n+0.5, x)/(2*x**(n+0.5))
 

@@ -21,7 +21,8 @@ OUTPUT_FILE: str | None = None             # Output file of the program. If None
 
 #------------AVAILABLE BASIS SETS---------------------------------------------------------------------------------------
 # STO-2G   STO-3G   STO-4G   STO-5G   STO-6G
-# 6-31++G
+# 3-21G    6-21G    6-31G    6-311G
+# 6-31++G  6-31++G**         6-311+G
 #-----------------------------------------------------------------------------------------------------------------------
 
 parser = argparse.ArgumentParser()
@@ -50,7 +51,7 @@ def HF_program(xyz_filename: str, basis_type:str, n_elec: int | None = None, e_t
          out_filename = f"{xyz_filename.split(".")[0]}.out"
 
     logger = SCFLogger(xyz_filename, out_filename)
-    scf = SCF(atoms, basis_type, n_elec, logger, e_tol, p_rms_tol, damping, maxiter)
+    scf = SCF(atoms, basis_type, n_elec, logger, e_tol, p_rms_tol, maxiter, damping)
 
     scf.run()
 
